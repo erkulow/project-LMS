@@ -7,7 +7,7 @@ export const Layout = ({ roles, children }) => {
    return (
       <Box display="flex">
          <SideBar roles={roles} />
-         <Box width="100%" padding="14px 40px 74px 20px" marginLeft="250px">
+         <Box width="100%" padding="14px 20px 14px 20px" marginLeft="250px">
             <Header roles={roles} />
             {children}
          </Box>

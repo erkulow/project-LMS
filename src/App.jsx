@@ -1,12 +1,8 @@
 import React from 'react'
-import { MainRouter } from './routes/MainRouter'
+import { AdminLayout } from './layout/AdminLayout'
 
 const App = () => {
-   return (
-      <div>
-         <MainRouter />
-      </div>
-   )
+   return <AdminLayout />
 }
 
 export default App

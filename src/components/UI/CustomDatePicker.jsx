@@ -27,6 +27,8 @@ export const CustomDatePicker = ({ value, setDate }) => {
                      '& .MuiOutlinedInput-root.Mui-focused': {
                         '& > fieldset': {
                            borderColor: 'black',
+                           width: '256px',
+                           height: '210px',
                         },
                      },
                   }}

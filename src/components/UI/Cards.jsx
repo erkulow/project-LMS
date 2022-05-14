@@ -109,7 +109,7 @@ const WrapperInfoGroup = styled.div`
    cursor: pointer;
 `
 const InfoGroup = styled(Title)`
-   width: 260px;
+   width: 240px;
    max-height: 62px;
    padding: 0 18px 8px 18px;
    overflow: hidden;

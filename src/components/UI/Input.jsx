@@ -2,14 +2,9 @@ import React, { forwardRef } from 'react'
 import styled, { css } from 'styled-components'
 
 export const Inputs = forwardRef((props, ref) => {
-   return (
-      <Input
-         {...props}
-         ref={ref}
-      />
-   )
+   return <StyledInput {...props} ref={ref} />
 })
-const Input = styled.input`
+const StyledInput = styled.input`
    ${(
       props,
       {

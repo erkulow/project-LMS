@@ -80,6 +80,7 @@ export const BasicModal = ({
                         background="#fff"
                         border="1px solid #3772ff"
                         onClick={modalCloseHanlder}
+                        hoverback="#fff"
                      >
                         {cancelTitle}
                      </Buttons>

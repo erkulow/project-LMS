@@ -54,7 +54,6 @@ export const TabsTitle = ({ tabs }) => {
 
    const params = useParams()
    // console.log(params) here you can get id params
-
    return (
       <StyledTabs
          value={value}

@@ -23,7 +23,7 @@ const ButtonWrapper = styled(Button)`
          fontcolor,
          border,
          borderRadius,
-         hoverBack,
+         hoverback,
          boxShodow,
          fontFamily,
          fontStyle,
@@ -50,7 +50,7 @@ const ButtonWrapper = styled(Button)`
          letter-spacing: ${letterSpacing || '0.001'}em !important;
          text-transform: none !important;
          &:hover {
-            background-color: ${hoverBack ||
+            background-color: ${hoverback ||
             'var(--hover-blue-color)'} !important;
          }
          &:after {

@@ -9,6 +9,7 @@ const StyledImagePicker = styled.div`
    flex-direction: column;
    align-items: center;
    justify-content: center;
+   text-align: center;
 `
 
 const DropZoneWrapper = styled.div`
@@ -31,8 +32,8 @@ export const ImagePicker = ({ getPhoto, image }) => {
             <input type="text" {...getInputProps()} />
             <DropZone cursor="pointer" />
          </DropZoneWrapper>
-         <Title color="#8d949e">
-            Нажмите на иконку чтобы загрузить или перетащите фото
+         <Title fontSize="14" fontcolor="#8d949e">
+            Нажмите на иконку чтобы <br /> загрузить или перетащите фото
          </Title>
       </StyledImagePicker>
    )
