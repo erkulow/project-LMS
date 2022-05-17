@@ -1,6 +1,6 @@
 import React from 'react'
 import { Layout } from './Layout'
-import { AdminRoutes } from '../routes/AdminRoutes'
+import { AdminRoutes } from '../routes/ADMIN_ROUTES/AdminRoutes'
 
 export const AdminLayout = () => {
    return (

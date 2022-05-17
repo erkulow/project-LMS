@@ -93,7 +93,7 @@ export const ConfirmModal = ({ isActive, toggleModal, deleteHandler }) => {
                         background="#C91E1E"
                         type="button"
                         onClick={handleDelete}
-                        hoverBack="none"
+                        hoverback="none"
                      >
                         Удалить
                      </Buttons>

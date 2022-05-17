@@ -1,11 +1,14 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
+import { GiHamburgerMenu } from 'react-icons/gi'
 import styled from 'styled-components'
 import { Box } from '@mui/material'
 import { Routes, Route } from 'react-router-dom'
 import { Profile } from '../components/UI/Profile'
+import media from '../utils/helpers/media'
 import { logout } from '../store/authSlice'
 import { TabsTitle } from '../components/UI/Tabs'
+import TemporaryDrawer from '../components/UI/Drawer'
 
 const userRole = {
    ADMIN: {
@@ -54,9 +57,9 @@ export const Header = ({ roles }) => {
    const logoutHandler = () => {
       dispatch(logout())
    }
-
    return (
       <StyledHeader>
+         <TemporaryDrawer roles={roles} />
          <Box width="100%" display="flex" justifyContent="space-between">
             <div />
             <Routes>

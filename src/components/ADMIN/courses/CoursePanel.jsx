@@ -1,34 +1,53 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
 import styled from 'styled-components'
+import { useNavigate } from 'react-router'
+import { useDispatch, useSelector } from 'react-redux'
 import { Buttons } from '../../UI/Buttons'
 import { FlexCards } from '../../UI/FlexCards'
 import { Cards } from '../../UI/Cards'
 import { ReactComponent as FixIcon } from '../../../assets/icons/FixIcon.svg'
 import { ReactComponent as EditIcon } from '../../../assets/icons/EditIcon.svg'
 import { ReactComponent as Trash } from '../../../assets/icons/TrashBin.svg'
-import { BasicModal } from '../../UI/BasicModal'
-import { ImagePicker } from '../../UI/ImagePicker'
-import { Inputs } from '../../UI/Input'
-import { ConfirmModal } from '../../UI/ConfirmModal'
-import { UserMultiSelect } from '../../UI/MultiSelect'
+import { getCourseList } from '../../../store/courseSlice'
+import { BasicPagination } from '../../UI/BasicPagination'
+import { ConditionalRender } from '../../UI/ConditionalRender'
+import { GroupModal } from './CourseModal'
 
 export const CoursePanel = () => {
-   const [isActive, setIsActive] = useState(null)
-   const clickHandler = () => {}
+   const dispatch = useDispatch()
+   const navigate = useNavigate()
+   useEffect(() => {
+      dispatch(getCourseList())
+   }, [])
+   const { courses, pages } = useSelector((store) => store.course)
+
+   const [isActive, setIsActive] = useState({
+      action: null,
+      groupInformation: {},
+   })
+
    const modalHandler = (item) => {
       setIsActive(item)
    }
    const closeModalHandler = () => {
-      setIsActive(false)
+      setIsActive({
+         action: null,
+         groupInformation: {},
+      })
    }
-   const { coursesData } = useSelector((state) => state.course)
+   const openInnerPage = (id) => {
+      navigate(`${id}`)
+   }
+
    const option = [
       {
          id: Math.random().toString(),
-         action: () => {
-            modalHandler('appointTeacher')
+         action: (groupInformation) => {
+            modalHandler({
+               action: 'appoint',
+               groupInformation,
+            })
          },
          content: (
             <>
@@ -39,8 +58,11 @@ export const CoursePanel = () => {
       },
       {
          id: Math.random().toString(),
-         action: () => {
-            modalHandler('edit')
+         action: (groupInformation) => {
+            modalHandler({
+               action: 'edit',
+               groupInformation,
+            })
          },
          content: (
             <>
@@ -51,8 +73,11 @@ export const CoursePanel = () => {
       },
       {
          id: Math.random().toString(),
-         action: () => {
-            modalHandler('delete')
+         action: (groupInformation) => {
+            modalHandler({
+               action: 'delete',
+               id: groupInformation.id,
+            })
          },
          content: (
             <>
@@ -62,97 +87,56 @@ export const CoursePanel = () => {
          ),
       },
    ]
-   const getPhoto = (img) => {
-      console.log(img)
-   }
-   let Modal = ''
-   if (isActive === 'addCourse') {
-      Modal = (
-         <BasicModal
-            addHandler={clickHandler}
-            title="Создать  курс"
-            isActive={!!isActive}
-            cancelTitle="Отмена"
-            successTitle="Добавить"
-            isActiveFooter="true"
-            modalCloseHanlder={closeModalHandler}
-         >
-            <ImagePicker getPhoto={getPhoto} />
-            <FlexInput>
-               <Inputs
-                  width="327"
-                  placeholder="Название курса"
-                  name="courseName"
-               />
-               <Inputs type="date" width="149" />
-            </FlexInput>
-            <Textarea placeholder="Описание курса" />
-         </BasicModal>
-      )
-   } else if (isActive === 'appointTeacher') {
-      Modal = (
-         <BasicModal
-            title="Назначить учителя"
-            isActive={!!isActive}
-            cancelTitle="cancel"
-            successTitle="add"
-            isActiveFooter="true"
-            modalCloseHanlder={closeModalHandler}
-         >
-            <UserMultiSelect />
-         </BasicModal>
-      )
-   } else if (isActive === 'edit') {
-      Modal = (
-         <BasicModal
-            title="Pедактировать"
-            isActive={!!isActive}
-            cancelTitle="Отмена"
-            successTitle="Добавить"
-            isActiveFooter="true"
-            modalCloseHanlder={closeModalHandler}
-         >
-            <ImagePicker />
-            <FlexInput>
-               <Inputs width="327" placeholder="Название курса" />
-               <Inputs type="date" width="149" />
-            </FlexInput>
-            <Textarea placeholder="Описание курса" />
-         </BasicModal>
-      )
-   } else if (isActive === 'delete') {
-      Modal = (
-         <ConfirmModal isActive={!!isActive} toggleModal={closeModalHandler} />
-      )
-   }
+
    return (
       <Wrapper>
          <Flex>
             <Buttons
                onClick={() => {
-                  modalHandler('addCourse')
+                  modalHandler({
+                     action: 'addCourse',
+                  })
                }}
             >
                <AiOutlinePlus fontSize="18px" /> Создать курс
             </Buttons>
          </Flex>
          <FlexCards>
-            {coursesData.map((el) => (
+            {courses.map((el) => (
                <Cards
+                  onCardClick={() => openInnerPage(el.id)}
                   key={el.id}
-                  title={el.title}
+                  title={el.courseName}
                   image={el.image}
                   description={el.description}
-                  duration={el.date}
+                  duration={el.dateOfFinish}
                   cardId={el.id}
                   option={option}
+                  allInformation={el}
                />
             ))}
          </FlexCards>
-         {Modal}
+         <ConditionalRender pages={pages}>
+            <StyledFooter>
+               <BasicPagination pages={pages} />
+            </StyledFooter>
+         </ConditionalRender>
+         <GroupModal
+            isActive={isActive}
+            onCloseModal={closeModalHandler}
+            // editPhoto={editGroupModalImage}
+            // sendPhoto={createGroupModalImage}
+            // onCreatePhoto={createPhotoHandler}
+            // onEditPhoto={editPhotoHandler}
+         />
       </Wrapper>
    )
 }
+
+const StyledFooter = styled.footer`
+   margin-left: 50vh;
+   margin-top: 30px;
+`
 const Wrapper = styled.div`
    padding-top: 24px;
    height: 100%;
@@ -163,31 +147,4 @@ const Wrapper = styled.div`
 const Flex = styled.div`
    display: flex;
    justify-content: end;
-`
-const FlexInput = styled.div`
-   display: flex;
-   justify-content: space-between;
-   margin-top: 25px;
-`
-const Textarea = styled.textarea`
-   width: 491px;
-   height: 123px;
-   resize: none;
-   margin-top: 12px;
-   border-radius: 10px;
-   outline: none;
-   padding: 10px 18px;
-   font-family: 'Open Sans';
-   font-style: normal;
-   font-weight: 400;
-   font-size: 16px;
-   line-height: 22px;
-   color: var(--base-font);
-   border: 1px solid #d4d4d4;
-   ::placeholder {
-      color: #8d949e;
-   }
-   :focus {
-      border: 1px solid #3772ff;
-   }
 `

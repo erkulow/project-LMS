@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { IoIosArrowDown } from 'react-icons/io'
 import { Title } from './Title'
+import media from '../../utils/helpers/media'
 import { MeetBalls } from './MeetBalls'
+
 import DefaultCardImage from '../../assets/images/DefaultCardImage.png'
 
 export const Cards = ({
@@ -10,8 +13,8 @@ export const Cards = ({
    duration,
    description,
    onCardClick,
-   cardId,
    option,
+   allInformation,
 }) => {
    const [anchorEl, setAnchorEl] = useState(null)
    const open = Boolean(anchorEl)
@@ -22,18 +25,22 @@ export const Cards = ({
       setAnchorEl(null)
    }
    const actionHandler = (action) => {
-      action({ id: cardId })
+      action(allInformation)
       closeHandler()
    }
    return (
-      <Card onClick={onCardClick}>
+      <Card>
          {image ? (
-            <WrapperImg src={image} alt="foto" />
+            <WrapperImg onClick={onCardClick} src={image} alt="foto" />
          ) : (
-            <WrapperImg src={DefaultCardImage} alt="foto" />
+            <WrapperImg
+               onClick={onCardClick}
+               src={DefaultCardImage}
+               alt="foto"
+            />
          )}
 
-         <WrapperGroupTitle>
+         <WrapperGroupTitle onClick={onCardClick}>
             <Title
                lineHeight="25px"
                fontWeight="600, bold"
@@ -51,6 +58,7 @@ export const Cards = ({
                {duration}
             </Title>
          </WrapperGroupTitle>
+         <ArrowIcon />
          <WrapperInfoGroup>
             <InfoGroup
                lineHeight="16px"
@@ -76,7 +84,6 @@ export const Cards = ({
 }
 const Card = styled.div`
    width: 250px;
-   height: 311px;
    display: flex;
    flex-direction: column;
    background: #ffffff;
@@ -84,16 +91,34 @@ const Card = styled.div`
    box-sizing: border-box;
    border-radius: 10px;
    cursor: pointer;
+   ${media.mobile`
+      width:100%;
+      height: auto;
+      padding: 5px;
+      display: flex;
+      flex-direction: row;
+   `}
+`
+const ArrowIcon = styled(IoIosArrowDown)`
+   display: none;
+   ${media.mobile`
+      display: block;
+       align-items: center;
+   `}
 `
 const WrapperImg = styled.img`
    width: 100%;
-   min-height: 171px;
+   height: 171px;
    border-top-left-radius: 10px;
    cursor: pointer;
    border-top-right-radius: 10px;
+   ${media.mobile`
+      display: none;
+      height: 40px;
+   `}
 `
 const WrapperGroupTitle = styled.div`
-   min-width: 100%;
+   min-width: 95%;
    display: flex;
    justify-content: space-between;
    align-items: center;
@@ -101,12 +126,25 @@ const WrapperGroupTitle = styled.div`
    p {
       margin: 16px 18px 5px 18px;
       cursor: pointer;
+      ${media.mobile`
+         margin:0;
+         width: 95%;
+      `}
    }
+   ${media.mobile`
+      flex-direction: column;
+      align-items: start;
+      min-width: 95%;
+
+   `}
 `
 const WrapperInfoGroup = styled.div`
    min-width: 236px;
    height: 60px;
    cursor: pointer;
+   ${media.mobile`
+      display: none;
+   `}
 `
 const InfoGroup = styled(Title)`
    width: 240px;
@@ -118,10 +156,16 @@ const InfoGroup = styled(Title)`
    -webkit-line-clamp: 3;
    -webkit-box-orient: vertical;
    cursor: pointer;
+   ${media.mobile`
+      display: none;
+   `}
 `
 const WrapperOptionsIcon = styled.div`
    display: flex;
    justify-content: end;
    margin: 8px 21px 13px;
    cursor: pointer;
+   ${media.mobile`
+      display: none;
+   `}
 `

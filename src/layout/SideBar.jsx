@@ -8,6 +8,7 @@ import { ReactComponent as TeachersIcon } from '../assets/icons/TeachersIcon.svg
 import { ReactComponent as StudentIcon } from '../assets/icons/StudentIcon.svg'
 import { ReactComponent as GroupsIcon } from '../assets/icons/GroupsIcon.svg'
 import { ReactComponent as TvIcon } from '../assets/icons/TV.svg'
+import media from '../utils/helpers/media'
 
 const sideBar = {
    ADMIN: [
@@ -40,32 +41,34 @@ const sideBar = {
 
 export const SideBar = ({ roles }) => {
    return (
-      <StyledBox position="fixed" width="240px">
-         <SidebarList>
-            <StyledLogo />
-            {sideBar[roles].map((item) => (
-               <StyledNavLink end to={item.path} key={item.title}>
-                  <StyledListItem button key={item.title}>
-                     <SelectedLink />
-                     <ListItemIcon>{item.icon}</ListItemIcon>
-                     <ListItemText primary={item.title} />
-                  </StyledListItem>
-               </StyledNavLink>
-            ))}
-         </SidebarList>
-      </StyledBox>
+      <>
+         {' '}
+         <StyledBox position="fixed" width="240px">
+            <SidebarList>
+               <StyledLogo roles={roles} />
+               {sideBar[roles].map((item) => (
+                  <StyledNavLink end to={item.path} key={item.title}>
+                     <StyledListItem button key={item.title}>
+                        <SelectedLink />
+                        <ListItemIcon>{item.icon}</ListItemIcon>
+                        <ListItemText primary={item.title} />
+                     </StyledListItem>
+                  </StyledNavLink>
+               ))}
+            </SidebarList>
+         </StyledBox>
+      </>
    )
 }
 
 const StyledNavLink = styled(NavLink)``
-
 const SelectedLink = styled.span`
    display: none;
    position: absolute;
    background: #1f6ed4;
    left: 0;
    width: 8px;
-   height: 100%; ;
+   height: 100%;
 `
 
 const StyledLogo = styled(Logo)`
@@ -80,8 +83,11 @@ const StyledBox = styled(Box)`
    text-align: center;
    height: 100vh;
    background-color: #fff;
+   ${media.mobile`
+      height:73px;
+      display: none;
+   `}
 `
-
 const SidebarList = styled(List)(() => ({
    '& .MuiListItem-root': {
       width: '93%',

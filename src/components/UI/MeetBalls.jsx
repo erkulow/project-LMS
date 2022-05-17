@@ -54,6 +54,7 @@ export const MeetBalls = ({
    handleClose,
    anchorEl,
    option,
+   onAction,
 }) => {
    return (
       <div>
@@ -84,7 +85,7 @@ export const MeetBalls = ({
                return (
                   <MenuItem
                      key={item.id}
-                     onClick={() => handleClose(item.action)}
+                     onClick={() => onAction(item.action)}
                      disableRipple
                   >
                      {item.content}

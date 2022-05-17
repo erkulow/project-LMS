@@ -30,6 +30,6 @@ const TitleStyle = styled.p`
          line-height: ${lineHeight || '16'}px !important;
          letter-spacing: ${letterSpacing || '0.001'}em !important;
          text-transform: none;
-         cursor: ${cursor || 'none'};
+         cursor: ${cursor || ''};
       `}
 `

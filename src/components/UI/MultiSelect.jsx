@@ -18,12 +18,7 @@ const StyledFormControl = styled(FormControl)`
       width: 491px;
    }
 `
-export const UserMultiSelect = ({
-   data = [],
-   listTitle,
-   value = [],
-   setValue,
-}) => {
+export const MultiSelect = ({ data = [], listTitle, value = [], setValue }) => {
    const [person, setPerson] = React.useState([])
 
    const handleChange = (event) => {
